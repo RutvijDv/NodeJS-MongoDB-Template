@@ -38,6 +38,15 @@ app.use(bodyParser.json());
 const routes = require("./routes");
 app.use("/", routes);
 
+//Error Handler
+function errorHandler(err, req, res, next) {
+  if (res.headersSent) {
+    return next(err);
+  }
+  res.status(500);
+  res.render("error", { error: err });
+}
+
 //Launch server
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
